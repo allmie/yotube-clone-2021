@@ -7,7 +7,7 @@
     "url": "git+https://github.com/allmie/yotube-clone-2021.git"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/index.js"
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "author": "JSW<allmie@naver.com>",
   "license": "MIT",
