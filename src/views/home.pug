@@ -1,7 +1,9 @@
 extends base
+include mixins/video
 
 block content
     h2=pageTitle
-    ul
-        each video in videos
-            li=video.title
+    each video in videos
+        +mixinVideo(video)
+    else 
+        h4 Can`t find videos.
