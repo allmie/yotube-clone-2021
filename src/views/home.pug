@@ -1,5 +1,7 @@
 extends base
 
 block content
-    h1 Home
-    input(type="text" placeholder="test")
+    h2=pageTitle
+    ul
+        each video in videos
+            li=video.title
