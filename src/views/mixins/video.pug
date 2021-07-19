@@ -1,6 +1,7 @@
 mixin mixinVideo(video)
     div
-        h3=video.title
+        h3
+            a.video__link(href=`/videos/${video.id}`)=video.title
         ul
             li #{video.rating} / 5
             li=video.createdAt
