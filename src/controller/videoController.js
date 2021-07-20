@@ -1,47 +1,26 @@
-const videos = [
-  {
-    title: 'abc',
-    rating: 3,
-    createdAt: '1 minute ago',
-    id: 1,
-    views: 31,
-  },
-  {
-    title: 'xyz',
-    rating: 1,
-    createdAt: '1 minute ago',
-    id: 2,
-    views: 1,
-  },
-  {
-    title: '123',
-    rating: 5,
-    createdAt: '2 day ago',
-    id: 3,
-    views: 24,
-  },
-];
+import Video from '../models/Video';
 
-export const trending = (req, res) => {
-  return res.render('home', { pageTitle: 'Home', videos });
+export const trending = async (req, res) => {
+  try {
+    const videos = await Video.find({});
+    return res.render('home', { pageTitle: 'Home', videos: [] });
+  } catch (err) {
+    return res.send('Database connection error: ', err);
+  }
 };
 export const see = (req, res) => {
   const {
     params: { id },
   } = req;
 
-  const video = videos.find((select) => select.id == id);
-
-  return res.render('see', { pageTitle: `See ${video.title}`, video });
+  return res.render('see', { pageTitle: `See` });
 };
 export const getEdit = (req, res) => {
   const {
     params: { id },
   } = req;
 
-  const video = videos.find((select) => select.id == id);
-
-  return res.render('edit', { pageTitle: `Edit ${video.title}`, video });
+  return res.render('edit', { pageTitle: `Edit` });
 };
 export const postEdit = (req, res) => {
   const {
@@ -50,11 +29,6 @@ export const postEdit = (req, res) => {
   const {
     body: { title },
   } = req;
-
-  const video = videos.find((select) => select.id == id);
-  video.title = title;
-
-  return res.redirect(`/videos/${id}`);
 };
 
 export const getUpload = (req, res) => {
