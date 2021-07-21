@@ -3,7 +3,8 @@ import Video from '../models/Video';
 export const trending = async (req, res) => {
   try {
     const videos = await Video.find({});
-    return res.render('home', { pageTitle: 'Home', videos: [] });
+    console.log(videos);
+    return res.render('home', { pageTitle: 'Home', videos });
   } catch (err) {
     return res.send('Database connection error: ', err);
   }
@@ -34,7 +35,22 @@ export const postEdit = (req, res) => {
 export const getUpload = (req, res) => {
   return res.render('upload', { pageTitle: 'Upload Video' });
 };
-export const postUpload = (req, res) => res.redirect('/');
+export const postUpload = async (req, res) => {
+  const { title, description, hashtags } = req.body;
+
+  await Video.create({
+    title,
+    description,
+    hashtags: hashtags.split(',').map((element) => `#${element.trim()}`),
+    createdAt: Date.now(),
+    meta: {
+      views: 0,
+      rating: 0,
+    },
+  });
+
+  return res.redirect('/');
+};
 
 export const search = (req, res) => res.send('search', { pageTitle: 'Search' });
 export const deleteVideo = (req, res) =>
