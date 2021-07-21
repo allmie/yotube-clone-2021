@@ -2,9 +2,6 @@ mixin mixinVideo(video)
     div
         h3
             a.video__link(href=`/videos/${video.id}`)=video.title
-        ul
-            li=video.title
-            li=video.description
-            li #{hashtags}
-            li #{video.meta.rating} / 5
-            
+        p=video.description
+        small=video.createdAt
+        hr
