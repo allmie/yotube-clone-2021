@@ -8,12 +8,13 @@ export const trending = async (req, res) => {
     return res.send('Database connection error: ', err);
   }
 };
-export const see = (req, res) => {
+export const see = async (req, res) => {
   const {
     params: { id },
   } = req;
 
-  return res.render('see', { pageTitle: `See` });
+  const video = await Video.findById(id);
+  return res.render('see', { pageTitle: video.title, video });
 };
 export const getEdit = (req, res) => {
   const {
