@@ -2,7 +2,7 @@ extends base
 
 block content
     if message
-        h4=message
+        span=message
     form(method='post')
         input(name='title', placeholder='Title', required, maxLength=80)
         input(name='description', placeholder='Description', required, minLength=20)
