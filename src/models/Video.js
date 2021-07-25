@@ -12,11 +12,12 @@ const videoSchema = new mongoose.Schema({
   },
 });
 
-videoSchema.pre('save', async function () {
-  this.hashtags = this.hashtags[0]
+videoSchema.static('convertHashtags', function (hashtags) {
+  return hashtags
     .split(',')
-    .map((element) => (element.startsWith('#') ? element : `#${element}`));
-  console.log(this.hashtags);
+    .map((element) =>
+      element.startsWith('#') ? element.trim() : `#${element.trim()}`
+    );
 });
 
 const model = mongoose.model('Video', videoSchema);
