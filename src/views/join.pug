@@ -1,0 +1,13 @@
+extends base
+
+block content
+    if message
+        h3=message
+    form(method='post')
+        input(type='email', name='email', placeholder='Email')
+        input(type='text', name='username', placeholder='Username')
+        input(type='text', name='name', placeholder='Name')
+        input(type='password', name='password', placeholder='Password')
+        input(type='password', name='password2', placeholder='Check Password')
+        input(type='text', name='location', placeholder='Location')
+        input(type='submit' value='Join')
