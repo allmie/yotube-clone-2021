@@ -2,7 +2,7 @@ import Video from '../models/Video';
 
 export const trending = async (req, res) => {
   try {
-    const videos = await Video.find({});
+    const videos = await Video.find().sort({ createdAt: 'asc' });
     return res.render('home', { pageTitle: 'Home', videos });
   } catch (err) {
     return res.send('Database connection error: ', err);
@@ -70,7 +70,6 @@ export const postUpload = async (req, res) => {
   }
 };
 
-export const search = (req, res) => res.send('search', { pageTitle: 'Search' });
 export const deleteVideo = async (req, res) => {
   const {
     params: { id },
@@ -78,4 +77,21 @@ export const deleteVideo = async (req, res) => {
 
   await Video.findByIdAndDelete(id);
   return res.redirect('/');
+};
+
+export const search = async (req, res) => {
+  const {
+    query: { keyword },
+  } = req;
+  let videos = [];
+
+  if (keyword) {
+    videos = await Video.find({
+      title: { $regex: new RegExp(keyword, 'i') },
+    });
+  }
+  return res.render('search', {
+    pageTitle: `Searching by "${keyword}"`,
+    videos,
+  });
 };
