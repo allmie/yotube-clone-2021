@@ -7,44 +7,34 @@ export const postJoin = async (req, res) => {
   } = req;
   let message = '';
 
-  const checkAccount = await User.findOne({ $or: [{ email }, { username }] });
+  const checkAccount = await User.exists({ $or: [{ email }, { username }] });
 
   if (checkAccount) {
     message = 'Email / Username already used.';
-    return res.render('join', { pageTitle: 'Join', message });
+    return res.status(400).render('join', { pageTitle: 'Join', message });
   }
-  {
-    //   const checkEmail = await User.findOne({
-    //     email,
-    //   });
-    //   const checkUsername = await User.findOne({
-    //     username,
-    //   });
-    //
-    //   if (checkEmail) {
-    //     message = 'Email already used';
-    //     return res.render('join', { pageTitle: 'Join', message });
-    //   }
-    //
-    //   if (checkUsername) {
-    //     message = 'Username already used';
-    //     return res.render('join', { pageTitle: 'Join', message });
-    //   }
-  }
+
   if (password !== password2) {
     message = 'Check your password';
-    return res.render('join', { pageTitle: 'Join', message });
+    return res.status(400).render('join', { pageTitle: 'Join', message });
   }
 
-  const aUser = await User.create({
-    email,
-    username,
-    name,
-    password: User.hasingPW(password),
-    location,
-  });
+  try {
+    const aUser = await User.create({
+      email,
+      username,
+      name,
+      password,
+      location,
+    });
 
-  return res.redirect('/');
+    return res.redirect('/');
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(400)
+      .render('join', { pageTitle: 'Join', message: error._message });
+  }
 };
 
 export const login = (req, res) => res.send('Login');

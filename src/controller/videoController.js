@@ -5,7 +5,7 @@ export const trending = async (req, res) => {
     const videos = await Video.find().sort({ createdAt: 'asc' });
     return res.render('home', { pageTitle: 'Home', videos });
   } catch (err) {
-    return res.send('Database connection error: ', err);
+    return res.status(400).send('Database connection error: ', err);
   }
 };
 export const see = async (req, res) => {
@@ -15,7 +15,7 @@ export const see = async (req, res) => {
 
   const video = await Video.findById(id);
   if (!video) {
-    return res.render('404', { pageTitle: 'Video not found.' });
+    return res.status(404).render('404', { pageTitle: 'Video not found.' });
   }
   return res.render('see', { pageTitle: video.title, video });
 };
@@ -26,7 +26,7 @@ export const getEdit = async (req, res) => {
 
   const video = await Video.findById(id);
   if (!video) {
-    return res.render('404', { pageTitle: 'Video not found.' });
+    return res.status(404).render('404', { pageTitle: 'Video not found.' });
   }
   return res.render('edit', { pageTitle: `Edit ${video.title}`, video });
 };
@@ -38,7 +38,7 @@ export const postEdit = async (req, res) => {
 
   const video = Video.exists({ _id: id });
   if (!video) {
-    return res.render('404', { pageTitle: 'Video not found.' });
+    return res.status(404).render('404', { pageTitle: 'Video not found.' });
   }
   await Video.findByIdAndUpdate(id, {
     title,
@@ -63,9 +63,9 @@ export const postUpload = async (req, res) => {
     return res.redirect('/');
   } catch (err) {
     console.log('upload Error: ', err);
-    return res.render('upload', {
+    return res.status(400).render('upload', {
       pageTitle: 'Upload Video',
-      message: err,
+      message: err._message,
     });
   }
 };
