@@ -1,0 +1,13 @@
+extends base
+
+block content
+    if message
+        span=message
+    form(method='post')
+        input(type='text', name='username', placeholder='Username')
+        input(type='password', name='password', placeholder='Password')
+        input(type='submit', value='Login')
+    hr
+    div
+        span Don`t you have an account?
+            a(href='/join') create one now &rarr;
