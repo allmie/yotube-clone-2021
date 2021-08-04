@@ -25,7 +25,7 @@ export const postJoin = async (req, res) => {
       email,
       username,
       name,
-      password,
+      password: await User.hasingPW(password),
       location,
     });
 

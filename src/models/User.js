@@ -9,18 +9,18 @@ const userSchema = new mongoose.Schema({
   location: String,
 });
 
-userSchema.pre('save', async function () {
-  this.password = await bcrypt.hash(this.password, 4);
-});
-
-// userSchema.static('hasingPW', async function (password) {
-//   try {
-//     const hashPassword = await bcrypt.hash(password, 4);
-//     return hashPassword;
-//   } catch (error) {
-//     conole.log('error:', error);
-//   }
+// userSchema.pre('save', async function () {
+//   this.password = await bcrypt.hash(this.password, 4);
 // });
+
+userSchema.static('hasingPW', async function (password) {
+  try {
+    const hashPassword = await bcrypt.hash(password, 4);
+    return hashPassword;
+  } catch (error) {
+    conole.log('error:', error);
+  }
+});
 
 userSchema.static('checkPassword', async function (password, encryptPassword) {
   return await bcrypt.compare(password, encryptPassword);
