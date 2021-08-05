@@ -4,10 +4,16 @@ header
         ul
             li
                 a(href='/') Home
-            li
-                a(href='/login') Login
-            li
-                a(href='/join') Join
+            if !isLogin
+                li
+                    a(href='/login') Login
+                li
+                    a(href='/join') Join
+            else
+                li 
+                    a(href='/logout') Logout
+                li
+                    a(href=`/users/${siteUser.username}`) Profile
             li
                 a(href='/videos/upload') Upload
             li
