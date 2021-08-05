@@ -1,6 +1,9 @@
 import Video from '../models/Video';
 
 export const trending = async (req, res) => {
+  // req.session.aa += 1;
+  // console.log(req.session.aa);
+  // console.log(req.sessionID);
   try {
     const videos = await Video.find().sort({ createdAt: 'asc' });
     return res.render('home', { pageTitle: 'Home', videos });

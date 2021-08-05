@@ -56,6 +56,8 @@ export const postLogin = async (req, res) => {
         message: 'Check your password',
       });
     }
+    req.session.login = true;
+    req.session.user = isUser;
 
     return res.redirect('/');
   }
