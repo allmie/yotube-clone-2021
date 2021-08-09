@@ -5,6 +5,7 @@ import { localsMiddleware } from './middlewares';
 import globalRouter from './router/globalRouter';
 import userRouter from './router/userRouter';
 import videoRouter from './router/videoRouter';
+import MongoStore from 'connect-mongo';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(
     secret: 'hawai',
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/wetube' }),
   })
 );
 
