@@ -16,10 +16,10 @@ app.set('views', process.cwd() + '/src/views');
 
 app.use(
   session({
-    secret: 'hawai',
+    secret: process.env.MONGO_SECRET,
     resave: true,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/wetube' }),
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
   })
 );
 
